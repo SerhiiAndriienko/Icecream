@@ -6,7 +6,7 @@
       e.webkitMatchesSelector ||
       function (e) {
         for (
-          var t = this,
+          let t = this,
             o = (t.document || t.ownerDocument).querySelectorAll(e),
             n = 0;
           o[n] && o[n] !== t;
@@ -28,7 +28,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   /* Записываем в переменные массив элементов-кнопок и подложку.
       Подложке зададим id, чтобы не влиять на другие элементы с классом overlay*/
-  var modalButtons = document.querySelectorAll('.js-open-modal'),
+  const modalButtons = document.querySelectorAll('.js-open-modal'),
     overlay = document.querySelector('.js-overlay-modal'),
     closeButtons = document.querySelectorAll('.js-modal-close'),
     stopBackground = document.querySelector('.data-body-stop');
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       /* При каждом клике на кнопку мы будем забирать содержимое атрибута data-modal
             и будем искать модальное окно с таким же атрибутом. */
-      var modalId = this.getAttribute('data-modal'),
+      let modalId = this.getAttribute('data-modal'),
         modalElem = document.querySelector(
           '.modal[data-modal="' + modalId + '"]'
         );
@@ -59,11 +59,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   closeButtons.forEach(function (item) {
     item.addEventListener('click', function (e) {
-      var parentModal = this.closest('.modal');
+      let parentModal = this.closest('.modal');
 
       parentModal.classList.remove('active');
       overlay.classList.remove('active');
       stopBackground.classList.remove('active');
+      video.contentWindow.postMessage(
+        '{"event":"command","func":"stopVideo","args":""}',
+        '*'
+      );
     });
   }); // end foreach
 
